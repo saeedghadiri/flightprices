@@ -1,0 +1,20 @@
+name: "update config"
+
+on:
+  push:
+    branches: [ "main" ]
+  schedule:
+    - cron: '0 * * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: ${{secrets.SUPABASE_URL}}
+      SUPABASE_KEY: ${{secrets.SUPABASE_KEY}}
+    steps:
+      - uses: actions/checkout@v3
+      - name: collect Data and insert
+        run: |
+          python -m pip install -r requirements.txt
+          python run.py
